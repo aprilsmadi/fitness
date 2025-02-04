@@ -1,2 +1,2 @@
-# musicweb
-April and Lilly music website project
+# fitness
+April and Lilly fitness tracker website project
