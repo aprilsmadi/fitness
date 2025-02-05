@@ -1,64 +1,70 @@
-const express = require('express');
-const cors = require('cors');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const sqlite3 = require('sqlite3').verbose();
+const express = require("express")
+const app = express ()
+const port = 8000
+const cors = require("cors")
+const axios = require("axios")
+const bodyParser = require('body-parser'); 
+
+const My_APIkey ="avw1EWKRNMTf6rfZaenENLPB0JrjCbrMm6peowyM"
+// const API_url = `https://api.api-ninjas.com/exercises?difficulty=${difficulty}`
+ 
+app.use(express.json())
+ app.use(cors())
+ app.use(bodyParser.json());  // To parse JSON
 
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// Connect to SQLite Database
-const db = new sqlite3.Database('./users.db', (err) => {
-  if (err) {
-    console.error('Database opening error: ' + err.message);
-  }
-});
-
-// Create Users Table (if it doesn't exist)
-db.run(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
-    password TEXT
-  )
-`);
-
-// Register User
-app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const query = `INSERT INTO users (username, password) VALUES (?, ?)`;
-
-  db.run(query, [username, hashedPassword], function (err) {
-    if (err) {
-      return res.status(400).json({ message: 'Error registering user' });
+ // API for Quotes :
+ app.get('/api/random-quote', async (req, res) => {
+    try {
+      const response = await axios.get('https://dummyjson.com/quotes/random');
+      const quote = response.data; 
+      res.json({ text: quote.quote , author: quote.author }); 
+      console.log(` this is res in backend ${quote}`)
+      console.log(quote)
+    } catch (error) {
+      console.error('Error fetching quote:', error);
+      res.status(500).json({ message: 'Failed to fetch quote' });
     }
-    res.status(201).json({ message: 'User registered' });
   });
-});
 
-// Login User
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const query = `SELECT * FROM users WHERE username = ?`;
 
-  db.get(query, [username], async (err, user) => {
-    if (err || !user) {
-      return res.status(400).json({ message: 'User not found' });
+
+
+//API for exercises  WE MUST USE ANOTHER API  :
+app.post("/exercises", async(req,res)=>{
+    const { difficulty } = req.body; 
+    console.log(`Requested difficulty: ${difficulty}`);
+    const response = await axios.get(`https://api.api-ninjas.com/exercises?difficulty=${difficulty}`, {
+        headers: {
+          'X-Api-Key': "avw1EWKRNMTf6rfZaenENLPB0JrjCbrMm6peowyM",
+        }})
+
+        
+  
+    try {
+      // Log the response for debugging purposes
+      console.log('API Response Data:', response.data);
+  
+      // Send the response data to the client
+      res.send(JSON.stringify(response.data));
+      }
+  
+      
+     catch (error) {
+      // Handle errors
+      if (error.response) {
+        // If the error is from the API call (like a 400 or 500 status)
+        console.error('API Error:', error.response.data);
+        res.status(error.response.status).json({ error: error.response.data });
+      } else {
+        // Handle other errors (network error, etc.)
+        console.error('General Error:', error.message);
+        res.status(500).json({ error: error.message });
+      }
     }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
-
-    const token = jwt.sign({ id: user.id }, 'secretKey', { expiresIn: '1h' });
-    res.json({ token });
   });
-});
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
-});
+
+ app.listen(port,()=>{
+    console.log(`SERVER is up in ${port}`)
+ })
