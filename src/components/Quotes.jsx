@@ -83,7 +83,7 @@ function Quotes() {
   }, [quote, isTypingAuthor]);
 
   return (
-    <div className="login-page">
+    <div className="login-page" >
       <div className="quote" style={{ color: theme.palette.mode === 'dark' ? 'white' : 'black' }}>
         {quote ? (
           <>
