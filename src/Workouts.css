@@ -1,0 +1,44 @@
+/* Workouts.css */
+
+/* Style for the main grid container */
+.workout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Gap between cards */
+    padding: 20px;
+  }
+  
+  /* Style for each workout card */
+  .workout-card {
+    border: 1px solid #ddd; /* Border around each card */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    background-color: #f9f9f9; /* Background color of the card */
+    transition: transform 0.2s ease; /* Smooth transition for hover effect */
+  }
+  
+  .workout-card:hover {
+    transform: translateY(-5px); /* Slightly lift the card when hovered */
+  }
+  
+  /* Title styling */
+  .workout-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* Paragraph styling */
+  .workout-card p {
+    font-size: 1rem;
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  /* Additional styling for workout details */
+  .workout-card p:first-child {
+    font-weight: bold;
+  }
+  
+  

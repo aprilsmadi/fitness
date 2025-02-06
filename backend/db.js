@@ -6,8 +6,18 @@ const db = new sqlite3.Database('./workouts.db', (err) => {
   } else {
     console.log('Database opened successfully!');
 
+    
+// Create Users Table (if it doesn't exist)
+db.run(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE,
+    password TEXT
+  )
+`);
+ 
 
-    db.run(`
+  db.run(`
       CREATE TABLE IF NOT EXISTS workouts (
         workout_id INTEGER PRIMARY KEY AUTOINCREMENT,
         workout_name TEXT NOT NULL,
@@ -58,7 +68,9 @@ const db = new sqlite3.Database('./workouts.db', (err) => {
           });
         });
       }
-    });  db.run(`
+    });  
+    // Create workout_sessions Table 
+    db.run(`
       CREATE TABLE IF NOT EXISTS workout_sessions (
         session_id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER,  
