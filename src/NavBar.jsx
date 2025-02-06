@@ -18,6 +18,8 @@ import GridViewTwoToneIcon from '@mui/icons-material/GridViewTwoTone';
 import FitnessCenterTwoToneIcon from '@mui/icons-material/FitnessCenterTwoTone';
 import SignalCellularAltTwoToneIcon from '@mui/icons-material/SignalCellularAltTwoTone';
 import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
+import { useState, useEffect } from 'react';
+
 import DarkMode from './DarkMode';
 
 
@@ -69,6 +71,7 @@ const NavBar = () => {
   const [open, setOpen] = React.useState(false); // Default state is closed
   const navigate = useNavigate(); // useNavigate hook for redirecting
   const isLoggedIn = localStorage.getItem('token'); // Check if the token is present
+  const [isMounted, setIsMounted] = useState(false);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -79,9 +82,14 @@ const NavBar = () => {
     navigate('/'); // Redirect to the main (home) page (or login page)
   };
 
+      useEffect(() => {
+          setIsMounted(true);
+        }, []);
+  
+
   return (
     <>
-      <MyAppBar position="fixed" fontFamily="MuseoModerno, serif">
+      <MyAppBar className={`swipe-right ${isMounted ? '' : 'hidden'}`} position="fixed" fontFamily="MuseoModerno, serif">
         <Toolbar >
           {/* Menu Button to Open the Drawer */}
           <IconButton edge="start" color="black" aria-label="menu" onClick={handleDrawerToggle}>

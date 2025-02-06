@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -26,6 +26,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [isLogin, setIsLogin] = useState(true); // Toggle between login and register mode
+    const [isMounted, setIsMounted] = useState(false);
 
     // Handle form submission (for login or registration)
     const handleSubmit = async (e) => {
@@ -58,10 +59,15 @@ const Login = () => {
 
     }
 
+    useEffect(() => {
+        setIsMounted(true);
+      }, []);
+
+
     return (
         <ThemeProvider theme={theme}>
             <FormControl variant="standard">
-                <div style={ loginStyle}>
+                <div className={`swipe-up ${isMounted ? '' : 'hidden'}`} style={ loginStyle}>
 
                     <h2>{isLogin ? 'Login' : 'Register'}</h2>
                     {error && <p style={{ color: 'green' }}>{error}</p>}
