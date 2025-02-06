@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
+import zIndex from '@mui/material/styles/zIndex';
 
 const theme = createTheme({
     palette: {
@@ -54,11 +55,18 @@ const Login = () => {
 
     // Define login form styles based on the theme mode, with boxShadow removed
     const loginStyle = {
-        border: `2px solid ${currentTheme.palette.mode === 'dark' ? 'white' : 'black'}`, // Change border color dynamically
-        backgroundColor: currentTheme.palette.mode === 'dark' ? '#333' : 'rgba(211, 211, 211, 0.94)', // Dark mode background
+        border: `2px solid ${currentTheme.palette.mode === 'dark' ? 'white' : 'black'}`,
+        backgroundColor: currentTheme.palette.mode === 'dark' ? '#333' : 'rgba(211, 211, 211, 0.94)',
         borderRadius: '20px',
-        // Removed boxShadow property
+        zIndex: 1000,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        margin: 'auto' // Centers horizontally
     };
+
 
     const linkStyle = {
         color: currentTheme.palette.mode === 'dark' ? 'white' : '#616161', // Change link color to white in dark mode
@@ -70,7 +78,7 @@ const Login = () => {
         <ThemeProvider theme={theme}>
             <FormControl variant="standard">
                 <div className={`fade-in ${isMounted ? '' : 'hidden'}`} style={loginStyle}>
-                    <h2>{isLogin ? 'Login' : 'Register'}</h2>
+                    <h2 style={{ alignItems: 'center' }}>{isLogin ? 'Login' : 'Register'}</h2>
                     {error && <p style={{ color: 'green' }}>{error}</p>}
                     <form onSubmit={handleSubmit}>
                         <div style={{ padding: '15px' }}>
@@ -121,7 +129,15 @@ const Login = () => {
                             />
                         </div>
                         {/* The button stays the same */}
-                        <Button sx={{ fontFamily: "MuseoModerno, serif" }} variant="contained" type="submit">
+                        <Button sx={{
+                            fontFamily: "MuseoModerno, serif",
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: 'auto'
+                        }}
+                            variant="contained" type="submit">
                             {isLogin ? 'Login' : 'Register'}
                         </Button>
                     </form>

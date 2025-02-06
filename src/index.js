@@ -4,8 +4,9 @@ import './index.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Workouts from './components/Workouts';
 import Stats from './components/Stats';
-import App from './App';
+import Login from './Login';
 import NavBar from './NavBar.jsx';
+
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme, CssBaseline, IconButton } from '@mui/material';
 import { WbSunny, Nightlight } from '@mui/icons-material';  // Import icons
@@ -13,11 +14,11 @@ import { WbSunny, Nightlight } from '@mui/icons-material';  // Import icons
 
 const AppWithTheme = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isFading, setIsFading] = useState(false);
 
-  const lightModeBackground = 'https://res.cloudinary.com/dnxyeqknh/image/upload/v1738847550/y0z9khd60tmlprdvodlx.jpg';  // Light mode background
-  const darkModeBackground = 'https://res.cloudinary.com/dnxyeqknh/image/upload/v1738846992/akacygbq4o2p0c9hcvxl.png';  // Dark mode background (replace with actual image URL)
+  const lightModeBackground = 'https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853965/gbivfllw01exsnoixe1b.jpg';  // Light mode background
+  const darkModeBackground = 'https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853862/swluloyfrhjpr2uciv0n.jpg';  // Dark mode background (replace with actual image URL)
 
-  // Define light theme (no color change in light mode)
   const lightTheme = createTheme({
     palette: {
       mode: 'light', // Default light mode, no color changes
@@ -166,37 +167,27 @@ const AppWithTheme = () => {
   const toggleTheme = () => setIsDarkMode((prev) => !prev);
 
 
+  useEffect(() => {
+    setIsFading(true);
+    const timer = setTimeout(() => setIsFading(false), 300); // Remove fade effect after 500ms
+    return () => clearTimeout(timer);
+  }, [isDarkMode]);
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme} >
       <CssBaseline />
 
       <NavBar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
 
 
-      <div
-        style={{
-          position: 'absolute',  // Ensure the background stays fixed
-          top: 0,
-          left: 0,
-          width: '100%',  // Full width
-          height: '100vh',  // Full height of the viewport
-          backgroundImage: `url(${isDarkMode ? darkModeBackground : lightModeBackground})`,
-          backgroundSize: 'cover',  // Ensure background covers the entire screen
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          zIndex: -1,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center'  // Send the background image behind the content
-        }}
-      >
+
+      <div className={`background-container ${isDarkMode ? 'dark' : 'light'} ${isFading ? 'fade' : ''}`}>
+
 
 
         {/* Routes */}
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<Login />} />
           <Route path="Workouts" element={<Workouts />} />
           <Route path="Stats" element={<Stats />} />
         </Routes>
@@ -208,8 +199,8 @@ const AppWithTheme = () => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <Router> {/* Wrap the app with BrowserRouter */}
-    <AppWithTheme /> {/* Wrap the App with theme toggler */}
+  <Router>
+    <AppWithTheme />
   </Router>
 );
 

@@ -29,7 +29,6 @@ const MyAppBar = styled(AppBar)(({ theme }) => ({
   borderRadius: '40px',
   marginTop: '5px',
   boxShadow: theme.palette.mode === 'dark' ? 'inset 20px 20px 60px #333' : 'inset 20px 20px 60px #b3b3b3',
-  
   border: theme.palette.mode === 'dark' ? '2px solid #fff' : '2px solid black',
 }));
 
@@ -47,8 +46,8 @@ const MyDrawer = styled(Drawer)(({ theme }) => ({
 }));
 
 const MyLogo = styled('img')({
-  width: '160px',
-  marginLeft: '30px',
+  width: '150px',
+  margin: '20px',
   justifyContent: 'center',
 });
 
@@ -95,14 +94,22 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
   return (
     <>
       <MyAppBar position="fixed" fontFamily="MuseoModerno, serif">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', borderRadius: '30px', marginRight: '10px' }}>
+        <Toolbar sx={{
+           display: 'flex', 
+           justifyContent: 'space-between',
+            borderRadius: '30px', 
+            marginRight: '10px',
+            
+             }}>
 
           {/* Menu Button to Open the Drawer */}
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
             <MenuIcon />
           </IconButton>
           <MyLogo
-            src="https://res.cloudinary.com/dnxyeqknh/image/upload/c_pad,ar_4:3/v1738751387/fitness-high-resolution-logo-transparent_2_n4rnti.png"
+            src={theme.palette.mode === 'dark'
+              ? "https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853336/fered16qk2accskhgn43.png"
+              : "https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853546/k753hgrtzzlc4iqepvmn.png"}
             alt="logo"
           />
 
@@ -126,8 +133,10 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
       </MyAppBar>
 
       {/* Drawer */}
-      <MyDrawer variant="persistent" anchor="left" open={open} onClose={handleDrawerToggle}>
-        <MyDrawerContent>
+      
+      <MyDrawer  variant="persistent" anchor="left" open={open} onClose={handleDrawerToggle} className={`fade-in ${isMounted ? '' : 'hidden'}`} >
+        
+        <MyDrawerContent >
 
           <Box sx={{
             display: 'flex',
@@ -136,6 +145,7 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
             paddingLeft: '10px', // Add left padding for better alignment
             paddingRight: '10px',  // Add right padding for the close icon
             width: '100%',
+            
           }}>
 
             <IconButton sx={{ color: 'inherit' }} onClick={toggleTheme}>
@@ -158,7 +168,9 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
           <MyLogoAndTitle>
             <Link to="/Workouts">
               <MyLogo2
-                src="https://res.cloudinary.com/dnxyeqknh/image/upload/c_pad,ar_4:3/v1738751387/fitness-high-resolution-logo-transparent_2_n4rnti.png"
+                src={theme.palette.mode === 'dark'
+                  ? "https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853336/fered16qk2accskhgn43.png"
+                  : "https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853546/k753hgrtzzlc4iqepvmn.png"}
                 alt="logo"
               />
             </Link>
@@ -216,6 +228,7 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
           </Box>
         </MyDrawerContent>
       </MyDrawer>
+      
     </>
   );
 };

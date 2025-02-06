@@ -11,3 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* Fade transition effect */
+  transition: background-image 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  opacity: 1;
+}
+
+.background-container.dark {
+  background-image: url('https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853862/swluloyfrhjpr2uciv0n.jpg');
+}
+
+.background-container.light {
+  background-image: url('https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853965/gbivfllw01exsnoixe1b.jpg');
+}
+
+.fade {
+  opacity: 0.5;
+  transition: opacity 0.8s ease-in-out, opacity 0.8s ease-in-out
+}
+
