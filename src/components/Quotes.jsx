@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useTheme } from "@mui/material/styles"; // Import useTheme to access current theme
 
 function Quotes() {
   const [quote, setQuote] = useState(null);
@@ -7,6 +8,8 @@ function Quotes() {
   const [authorText, setAuthorText] = useState(""); // To track the typewriter effect for the author
   const [isTypingQuote, setIsTypingQuote] = useState(false); // To handle quote typing state
   const [isTypingAuthor, setIsTypingAuthor] = useState(false); // To handle author typing state
+
+  const theme = useTheme(); // Access current theme
 
   useEffect(() => {
     let isMounted = true;
@@ -81,12 +84,16 @@ function Quotes() {
 
   return (
     <div className="login-page">
-      <div className="quote">
+      <div className="quote" style={{ color: theme.palette.mode === 'dark' ? 'white' : 'black' }}>
         {quote ? (
           <>
             <span>{displayedText}</span>
             <br /> 
-            {authorText && <div className="author">- {authorText}</div>}
+            {authorText && (
+              <div className="author" style={{ color: theme.palette.mode === 'dark' ? 'white' : 'black' }}>
+                - {authorText}
+              </div>
+            )}
           </>
         ) : (
           <div>Loading quote...</div>

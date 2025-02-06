@@ -1,82 +1,105 @@
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { useState, useEffect } from "react";
-import NightlightIcon from '@mui/icons-material/Nightlight';
-import Button from '@mui/material/Button';
+import React, { useState } from 'react';
+import { ThemeProvider, createTheme, CssBaseline, Button, Switch } from '@mui/material';
 
-// Define the Light theme with custom fonts
-const themeLight = createTheme({
-  palette: {
-    mode: 'light', // Correct key for theme mode is `mode` instead of `type`
-    primary: {
-      main: '#000',
-    },
-  },
-  typography: {
-    fontFamily: '"MuseoModerno", serif', // Set a different font for dark theme
-    h1: {
-      fontFamily: '"MuseoModerno", serif',
-    },
-    h2: {
-      fontFamily: '"MuseoModerno", serif',
-    },
-    body1: {
-      fontFamily: '"MuseoModerno", serif', // Different font for body text
-    }
-  }
-});
+function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-// Define the Dark theme with custom fonts
-const themeDark = createTheme({
-  palette: {
-    mode: 'dark', 
-    primary: {
-      main: '#fff',
+  // Define light and dark themes
+  const lightTheme = createTheme({
+    palette: {
+      mode: 'light',
+      primary: {
+        main: '#1976d2', // Blue color
+      },
+      background: {
+        default: '#fff', // White background for light mode
+        paper: '#f4f4f4', // Light gray for paper background
+      },
+      text: {
+        primary: '#000', // Black text
+        secondary: '#555', // Dark gray text
+      },
     },
-    text: {
-      primary: '#fff',
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            border: '1px solid #1976d2', // Light blue border
+            color: '#1976d2', // Button text color
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            '& .MuiOutlinedInput-root': {
+              borderColor: '#1976d2', // Light blue input border
+            },
+          },
+        },
+      },
     },
-  },
-  typography: {
-    fontFamily: '"MuseoModerno", serif', // Set a different font for dark theme
-    h1: {
-      fontFamily: '"MuseoModerno", serif',
-    },
-    h2: {
-      fontFamily: '"MuseoModerno", serif',
-    },
-    body1: {
-      fontFamily: '"MuseoModerno", serif', // Different font for body text
-    }
-  }
-});
+  });
 
-export default function DarkMode() {
-  const [light, setLight] = useState(true);
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#fff', // Light blue color for dark mode
+      },
+      background: {
+        default: '#000', // Dark background
+        paper: '#000', // Dark paper background
+      },
+      text: {
+        primary: '#fff', // White text
+        secondary: '#fff', // Light gray text
+      },
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            border: '1px solid #fff', // Light blue border for dark mode
+            color: '#fff', // Button text color for dark mode
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            '& .MuiOutlinedInput-root': {
+              borderColor: '#fff', // Light blue input border for dark mode
+            },
+          },
+        },
+      },
+    },
+  });
 
-  useEffect(() => {
-    if (!light) {
-      document.body.classList.add('dark-mode');
-      document.getElementById('nav')?.classList.add('nav');
-    } else {
-      document.body.classList.remove('dark-mode');
-      document.getElementById('nav')?.classList.remove('nav');
-    }
-  }, [light]);
+  // Toggle theme
+  const toggleTheme = () => setIsDarkMode((prev) => !prev);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <ThemeProvider theme={light ? themeLight : themeDark}>
-        <CssBaseline />
-        <Button
-          id="btn"
-          variant="outlined"
-          sx={{ border: "2px solid transparent", borderRadius: "20px" }}
-          onClick={() => setLight((prev) => !prev)}
-        >
-          <NightlightIcon />
-        </Button>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <CssBaseline /> {/* This ensures that the baseline styles are applied (helps with consistent styling) */}
+      <div style={{ padding: '20px', minHeight: '100vh', background: isDarkMode ? '#000' : '#fff' }}>
+        <h1 style={{ color: isDarkMode ? '#fff' : '#000' }}>Theme Toggle Example</h1>
+        
+        {/* Button */}
+        <Button variant="outlined">My Button</Button>
+
+        {/* Text Field */}
+        <TextField label="Example Input" variant="outlined" style={{ marginTop: '20px' }} />
+        
+        {/* Switch to toggle between light/dark mode */}
+        <div style={{ marginTop: '20px' }}>
+          <Switch checked={isDarkMode} onChange={toggleTheme} />
+          <span style={{ color: isDarkMode ? '#fff' : '#000' }}>Toggle Dark/Light Mode</span>
+        </div>
+      </div>
+    </ThemeProvider>
   );
-};
+}
+
+export default App;
