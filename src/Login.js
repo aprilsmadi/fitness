@@ -54,8 +54,9 @@ const Login = () => {
 
     const loginStyle  ={
         border: '2px solid black',
-        backgroundColor: 'rgba(211, 211, 211, 0.9)',
-        borderRadius: '20px'
+        backgroundColor: 'rgba(211, 211, 211, 0.94)',
+        borderRadius: '20px',
+        boxShadow: 'inset 20px 20px 60px #b3b3b3, inset -20px -20px 60px #f3f3f3'
 
     }
 
@@ -67,7 +68,7 @@ const Login = () => {
     return (
         <ThemeProvider theme={theme}>
             <FormControl variant="standard">
-                <div className={`swipe-up ${isMounted ? '' : 'hidden'}`} style={ loginStyle}>
+                <div className={`fade-in ${isMounted ? '' : 'hidden'}`} style={ loginStyle}>
 
                     <h2>{isLogin ? 'Login' : 'Register'}</h2>
                     {error && <p style={{ color: 'green' }}>{error}</p>}

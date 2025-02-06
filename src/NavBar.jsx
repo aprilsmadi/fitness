@@ -20,14 +20,15 @@ import SignalCellularAltTwoToneIcon from '@mui/icons-material/SignalCellularAltT
 import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
 import { useState, useEffect } from 'react';
 
-import DarkMode from './DarkMode';
+
+import Quotes from './components/Quotes';
 
 
 const drawerWidth = 250;
 
 // Styled AppBar to match the requested color palette
 const MyAppBar = styled(AppBar)(() => ({
-  backgroundColor: '#D3D3D3',
+  
 }));
 
 const MyDrawer = styled(Drawer)(() => ({
@@ -38,6 +39,8 @@ const MyDrawer = styled(Drawer)(() => ({
     backgroundColor: '#e0c2ff',
     color: '#333',
     borderRight: 'none',
+    border: '2px solid black',
+    borderRadius: '20px',
   },
 }));
 
@@ -64,7 +67,7 @@ const MyLogoAndTitle = styled('div')({
   display: 'flex',
   alignItems: 'center',
   padding: '20px',
-  backgroundColor: '#e0c2ff',
+
 });
 
 const NavBar = () => {
@@ -82,40 +85,69 @@ const NavBar = () => {
     navigate('/'); // Redirect to the main (home) page (or login page)
   };
 
-      useEffect(() => {
-          setIsMounted(true);
-        }, []);
-  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+
 
   return (
     <>
-      <MyAppBar className={`swipe-right ${isMounted ? '' : 'hidden'}`} position="fixed" fontFamily="MuseoModerno, serif">
-        <Toolbar >
+      <MyAppBar position="fixed" fontFamily="MuseoModerno, serif" sx={{backgroundColor:'rgba(211, 211, 211, 0.94)', borderRadius: '40px', marginTop:'5px'}}>
+
+        <Toolbar
+          sx={{
+            display: 'flex', justifyContent: 'space-between',
+            boxShadow: 'inset 20px 20px 60px #b3b3b3, inset -20px -20px 60px #f3f3f3',
+            border: '1px solid black',
+            borderRadius: '30px',
+            
+            marginRight:'10px',
+            
+          }}>
+
+
           {/* Menu Button to Open the Drawer */}
-          <IconButton edge="start" color="black" aria-label="menu" onClick={handleDrawerToggle}>
+          <IconButton edge="start" color="black" aria-label="menu" onClick={handleDrawerToggle} sx={{ '&:hover': { border: '1px solid black' } }}>
             <MenuIcon />
           </IconButton>
           <MyLogo
             src="https://res.cloudinary.com/dnxyeqknh/image/upload/c_pad,ar_4:3/v1738751387/fitness-high-resolution-logo-transparent_2_n4rnti.png"
             alt="logo"
           /> {/* Your logo here */}
-          <Box sx={{display: 'flex', paddingLeft: "1550px"}}>
+          <Box className={`fade-in ${isMounted ? '' : 'hidden'}`}
+            sx={{
+              color: 'black',
+              marginRight: '50px',
+              paddingRight: '50px',
+              paddingLeft: '20px',
+              textAlign: 'right',
+              marginLeft: 'auto', // Push to the right side
+              
+              
+              borderRadius: '20px',
+              
+                // Right-to-left text direction
+            }}>
 
-          
+            <Quotes />
+
           </Box>
         </Toolbar>
       </MyAppBar>
 
       {/* Drawer */}
-      <MyDrawer variant="persistent" anchor="left" open={open} onClose={handleDrawerToggle}>
-        <MyDrawerContent>
+      <MyDrawer variant="persistent" anchor="left" open={open} onClose={handleDrawerToggle} >
+        <MyDrawerContent sx={{ boxShadow: 'inset 20px 20px 60px #e0c2ff, inset -20px -20px 60px #f3f3f3' }}>
           {/* Arrow to Close the Drawer */}
           <IconButton
             onClick={handleDrawerToggle}
             sx={{
+              '&:hover': { border: '1px solid black' },
               marginLeft: 'auto',
               marginTop: '10px',
               marginRight: '10px',
+              color: 'black'
             }}
           >
             <ChevronLeftIcon />
@@ -123,34 +155,22 @@ const NavBar = () => {
 
           {/* Drawer content */}
           <MyLogoAndTitle>
-            <Link to="/">
+            <Link to="/Workouts">
               <MyLogo2
-                src="https://res.cloudinary.com/dnxyeqknh/image/upload/c_pad,ar_16:9/v1738751387/fitness-high-resolution-logo-transparent_2_n4rnti.png"
+                src="https://res.cloudinary.com/dnxyeqknh/image/upload/c_pad,ar_4:3/v1738751387/fitness-high-resolution-logo-transparent_2_n4rnti.png"
                 alt="logo"
+
               />
             </Link>
           </MyLogoAndTitle>
-          
+
 
           {/* Main Drawer Content (Navigation Items) */}
           {isLoggedIn && (
             <List id="nav">
-              <ListItem button sx={{ '&:hover': { backgroundColor: '#d3d3d3' } }}>
-                <Link to="/Dashboard" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-                  <ListItemIcon>
-                    <GridViewTwoToneIcon /> {/* Icon */}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <Typography sx={{ fontFamily: 'MuseoModerno, serif', color: 'black' }}>
-                        Dashboard
-                      </Typography>
-                    }
-                  />
-                </Link>
-              </ListItem>
 
-              <ListItem button sx={{ '&:hover': { backgroundColor: '#d3d3d3' } }}>
+
+              <ListItem button sx={{ '&:hover': { border: '2px solid black', borderRadius: '20px' } }}>
                 <Link to="/Workouts" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
                   <ListItemIcon>
                     <FitnessCenterTwoToneIcon />
@@ -165,7 +185,7 @@ const NavBar = () => {
                 </Link>
               </ListItem>
 
-              <ListItem button sx={{ '&:hover': { backgroundColor: '#d3d3d3' } }}>
+              <ListItem button sx={{ '&:hover': { border: '2px solid black', borderRadius: '20px' } }}>
                 <Link to="/Stats" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
                   <ListItemIcon>
                     <SignalCellularAltTwoToneIcon />
@@ -187,7 +207,7 @@ const NavBar = () => {
             {/* Logout Button (only show if logged in) */}
             {isLoggedIn && (
               <List id="nav">
-                <ListItem button sx={{ '&:hover': { backgroundColor: '#d3d3d3' }, cursor: 'pointer' }} onClick={handleLogout}>
+                <ListItem button sx={{ '&:hover': { border: '2px solid black', borderRadius: '20px' }, cursor: 'pointer' }} onClick={handleLogout}>
                   <ListItemIcon>
                     <LogoutTwoToneIcon />
                   </ListItemIcon>

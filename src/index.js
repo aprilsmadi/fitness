@@ -10,9 +10,6 @@ import NavBar from './NavBar.jsx'
 import reportWebVitals from './reportWebVitals';
 
 
-
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -22,7 +19,7 @@ root.render(
 
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="Dashboard" element={<Dashboard />} />
+      
       <Route path="Workouts" element={<Workouts />} />
       <Route path="Stats" element={<Stats />} />
     </Routes>
