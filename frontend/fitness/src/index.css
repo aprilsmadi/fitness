@@ -41,8 +41,3 @@ code {
   background-image: url('https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853965/gbivfllw01exsnoixe1b.jpg');
 }
 
-.fade {
-  opacity: 0.5;
-  transition: opacity 0.8s ease-in-out, opacity 0.8s ease-in-out
-}
-

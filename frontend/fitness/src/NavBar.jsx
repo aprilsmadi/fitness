@@ -12,24 +12,25 @@ import {
   Box
 } from '@mui/material';
 import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
-import { styled, useTheme } from '@mui/material/styles'; // useTheme to access the current theme
+import { styled, useTheme } from '@mui/material/styles'; 
 import { Link, useNavigate } from "react-router-dom";
 import FitnessCenterTwoToneIcon from '@mui/icons-material/FitnessCenterTwoTone';
 import SignalCellularAltTwoToneIcon from '@mui/icons-material/SignalCellularAltTwoTone';
 import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
 import Quotes from './components/Quotes';
-import { WbSunny, Nightlight } from '@mui/icons-material';  // Import icons
+import { WbSunny, Nightlight } from '@mui/icons-material';  
 
 
 const drawerWidth = 250;
 
-// Styled AppBar to match the requested color palette
 const MyAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#333' : 'rgba(211, 211, 211, 0.94)',
   borderRadius: '40px',
   marginTop: '5px',
   boxShadow: theme.palette.mode === 'dark' ? 'inset 20px 20px 60px #333' : 'inset 20px 20px 60px #b3b3b3',
   border: theme.palette.mode === 'dark' ? '2px solid #fff' : '2px solid black',
+  transition: 'background-color 0.8s ease-in-out, box-shadow 0.8s ease-in-out, border 0.8s ease-in-out, opacity 0.8s ease-in-out',
+
 }));
 
 const MyDrawer = styled(Drawer)(({ theme }) => ({
@@ -37,12 +38,13 @@ const MyDrawer = styled(Drawer)(({ theme }) => ({
   flexShrink: 0,
   '& .MuiDrawer-paper': {
     width: drawerWidth,
-    backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#e0c2ff', // Match the toolbar background color
+    backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#e0c2ff', 
     color: theme.palette.mode === 'dark' ? '#fff' : '#333',
     borderRight: 'none',
     border: theme.palette.mode === 'dark' ? '2px solid #fff' : '2px solid black',
     borderRadius: '20px',
   },
+
 }));
 
 const MyLogo = styled('img')({
@@ -95,12 +97,12 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
     <>
       <MyAppBar position="fixed" fontFamily="MuseoModerno, serif">
         <Toolbar sx={{
-           display: 'flex', 
-           justifyContent: 'space-between',
-            borderRadius: '30px', 
-            marginRight: '10px',
-            
-             }}>
+          display: 'flex',
+          justifyContent: 'space-between',
+          borderRadius: '30px',
+          marginRight: '10px',
+
+        }}>
 
           {/* Menu Button to Open the Drawer */}
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
@@ -118,7 +120,7 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
 
 
 
-          <Box className={`fade-in ${isMounted ? '' : 'hidden'}`}
+          <Box
             sx={{
               color: 'black',
               marginRight: '50px',
@@ -133,9 +135,9 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
       </MyAppBar>
 
       {/* Drawer */}
-      
-      <MyDrawer  variant="persistent" anchor="left" open={open} onClose={handleDrawerToggle} className={`fade-in ${isMounted ? '' : 'hidden'}`} >
-        
+
+      <MyDrawer variant="persistent" anchor="left" open={open} onClose={handleDrawerToggle}  >
+
         <MyDrawerContent >
 
           <Box sx={{
@@ -145,7 +147,7 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
             paddingLeft: '10px', // Add left padding for better alignment
             paddingRight: '10px',  // Add right padding for the close icon
             width: '100%',
-            
+
           }}>
 
             <IconButton sx={{ color: 'inherit' }} onClick={toggleTheme}>
@@ -228,7 +230,7 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
           </Box>
         </MyDrawerContent>
       </MyDrawer>
-      
+
     </>
   );
 };

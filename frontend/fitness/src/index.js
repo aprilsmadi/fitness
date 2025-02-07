@@ -16,8 +16,6 @@ const AppWithTheme = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isFading, setIsFading] = useState(false);
 
-  const lightModeBackground = 'https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853965/gbivfllw01exsnoixe1b.jpg';  // Light mode background
-  const darkModeBackground = 'https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853862/swluloyfrhjpr2uciv0n.jpg';  // Dark mode background (replace with actual image URL)
 
   const lightTheme = createTheme({
     palette: {
@@ -177,7 +175,7 @@ const AppWithTheme = () => {
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme} >
       <CssBaseline />
 
-      <NavBar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <NavBar  isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
 
 
 
