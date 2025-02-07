@@ -26,14 +26,17 @@ const Workouts = () => {
   useEffect(() => {
     setLoading(true);
     fetch('http://localhost:8000/workouts')
+    fetch('http://localhost:8000/workouts')
       .then((response) => {
         if (!response.ok) {
+          throw new Error('Failed to fetch workouts');
           throw new Error('Failed to fetch workouts');
         }
         return response.json();
       })
       .then((data) => {
         setWorkouts(data);
+        setLoading(false);
         setLoading(false);
       })
       .catch((err) => {
@@ -61,26 +64,15 @@ const Workouts = () => {
   const handleMuscleSelect = (muscle) => {
     setSelectedMuscle(muscle);
   };
-<<<<<<< Updated upstream
- 
-  const handleStartWorkout = async (workoutId) => {
-    const token = localStorage.getItem('token'); // Get JWT token from localStorage
- 
-=======
 
   const handleStartWorkout = async (workoutId) => {
     const token = localStorage.getItem('token'); // Get JWT token from localStorage
 
->>>>>>> Stashed changes
     if (!token) {
       alert('Please log in to start a workout');
       return;
     }
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
     try {
       // Send a POST request to start the workout session
       const response = await axios.post(
@@ -88,77 +80,46 @@ const Workouts = () => {
         { workoutId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
       // Save the session ID for this specific workout
       setSessions((prevSessions) => ({
         ...prevSessions,
         [workoutId]: { sessionId: response.data.sessionId, started: true, ended: false, burnedCalories: 0, duration: 0, isStopping: false },
       }));
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
       alert('Workout session started!');
     } catch (error) {
       console.error('Error starting workout:', error);
       alert('Failed to start workout');
     }
   };
-<<<<<<< Updated upstream
- 
-  const handleEndWorkout = async (workoutId) => {
-    const token = localStorage.getItem('token'); // Get JWT token from localStorage
- 
-=======
 
   const handleEndWorkout = async (workoutId) => {
     const token = localStorage.getItem('token'); // Get JWT token from localStorage
 
->>>>>>> Stashed changes
     if (!token) {
       alert('Please log in to stop a workout');
       return;
     }
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
     const sessionId = sessions[workoutId]?.sessionId;
     if (!sessionId) {
       alert('No active workout session found.');
       return;
     }
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
     // Prevent trying to stop the workout if it's already ended
     if (sessions[workoutId]?.ended) {
       alert('Workout session already ended.');
       return;
     }
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
     // Set the button to be in "stopping" mode to prevent double clicks
     setSessions((prevSessions) => ({
       ...prevSessions,
       [workoutId]: { ...prevSessions[workoutId], isStopping: true },
     }));
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
     try {
       // Send a POST request to stop the workout session
       const response = await axios.post(
@@ -166,15 +127,9 @@ const Workouts = () => {
         { sessionId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-<<<<<<< Updated upstream
- 
-      console.log("End Workout Response:", response.data); // Debugging the response
- 
-=======
 
       console.log("End Workout Response:", response.data); // Debugging the response
 
->>>>>>> Stashed changes
       if (response.data.success) {
         // Update the session state to reflect the workout has ended
         setSessions((prevSessions) => ({
@@ -187,11 +142,7 @@ const Workouts = () => {
             isStopping: false, // Reset the isStopping state
           },
         }));
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
         alert('Workout session ended!'); // Alert when the session ends successfully
       } else {
         alert(response.data.message || 'Failed to end workout');
@@ -206,11 +157,7 @@ const Workouts = () => {
       }));
     }
   };
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
   if (loading) {
     return (
       <Box
@@ -232,13 +179,9 @@ const Workouts = () => {
       </Box>
     );
   }
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
   if (error) return <Typography color="error">Error: {error}</Typography>;
- 
+
   return (
     <div>
       <Box sx={{ marginTop: "100px", transition: "background-color 0.8s ease-in-out" }}>
@@ -282,20 +225,12 @@ const Workouts = () => {
             ))}
           </Box>
         )}
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
         {/* Filtered Workouts List */}
         {selectedMuscle && filteredWorkouts.length === 0 && (
           <Typography variant="h6">No workouts available for this muscle.</Typography>
         )}
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
         <Box
           sx={{
             display: "grid",
@@ -329,11 +264,7 @@ const Workouts = () => {
                 <Typography variant="body1"><strong>Difficulty:</strong> {workout.difficulty}</Typography>
                 <Typography variant="body2"><strong>Tips:</strong> {workout.tips}</Typography>
                 <Typography variant="body2"><strong>Description:</strong> {workout.description}</Typography>
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
                 {/* Conditionally render the button based on the session state */}
                 {sessions[workout.workout_id]?.ended ? (
                   <Typography variant="body2" sx={{ color: 'green', fontWeight: 'bold' }}>
@@ -356,11 +287,7 @@ const Workouts = () => {
                     Start Workout
                   </Button>
                 )}
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
                 {/* Stop Workout Button */}
                 {sessions[workout.workout_id]?.started && !sessions[workout.workout_id]?.ended && (
                   <Button
@@ -384,11 +311,7 @@ const Workouts = () => {
             </motion.div>
           ))}
         </Box>
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
         {/* Back to Muscle Selection Button */}
         {selectedMuscle && (
           <Box sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
