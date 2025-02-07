@@ -5,11 +5,13 @@ import { CircularProgress } from '@mui/material';
 import { motion } from "framer-motion"; // Import Framer Motion
 import axios from 'axios'; // Import axios for API calls
 import './Workouts.css'; // Import the CSS file
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
+const muscleImages = {
+  chest: "https://res.cloudinary.com/dnxyeqknh/image/upload/v1738940124/hdynqhfctg2kvcc9d3b1.png", // Replace with actual image URL for chest
+  legs: "https://res.cloudinary.com/dnxyeqknh/image/upload/v1738940107/zt1gkxlmvrqzcmn492xi.png",   // Replace with actual image URL for legs
+  fullbody: "https://res.cloudinary.com/dnxyeqknh/image/upload/v1738940117/kplikf5iniuxepilbfjc.png",
+};
+
 const Workouts = () => {
   const theme = useTheme(); // Access current theme (dark/light mode)
   const [workouts, setWorkouts] = useState([]);
@@ -17,11 +19,7 @@ const Workouts = () => {
   const [error, setError] = useState(null);
   const [selectedMuscle, setSelectedMuscle] = useState(null);
   const [sessions, setSessions] = useState({}); // Track session IDs for each workout
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
   // Fetch workouts from the backend
   useEffect(() => {
     setLoading(true);
@@ -43,35 +41,34 @@ const Workouts = () => {
         setError(err.message);
         setLoading(false);
       });
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   }, []);
- 
+
   // Get all unique primary muscles
   const muscles = [...new Set(workouts.map((workout) => workout.primary_muscle))];
- 
+
   // Filter workouts based on selected muscle
   const filteredWorkouts = selectedMuscle
     ? workouts.filter((workout) => workout.primary_muscle === selectedMuscle)
     : [];
- 
+
   const handleMuscleSelect = (muscle) => {
     setSelectedMuscle(muscle);
   };
 
+
   const handleStartWorkout = async (workoutId) => {
     const token = localStorage.getItem('token'); // Get JWT token from localStorage
+
 
     if (!token) {
       alert('Please log in to start a workout');
       return;
     }
+
 
     try {
       // Send a POST request to start the workout session
@@ -81,11 +78,13 @@ const Workouts = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+
       // Save the session ID for this specific workout
       setSessions((prevSessions) => ({
         ...prevSessions,
         [workoutId]: { sessionId: response.data.sessionId, started: true, ended: false, burnedCalories: 0, duration: 0, isStopping: false },
       }));
+
 
       alert('Workout session started!');
     } catch (error) {
@@ -94,13 +93,16 @@ const Workouts = () => {
     }
   };
 
+
   const handleEndWorkout = async (workoutId) => {
     const token = localStorage.getItem('token'); // Get JWT token from localStorage
+
 
     if (!token) {
       alert('Please log in to stop a workout');
       return;
     }
+
 
     const sessionId = sessions[workoutId]?.sessionId;
     if (!sessionId) {
@@ -108,17 +110,20 @@ const Workouts = () => {
       return;
     }
 
+
     // Prevent trying to stop the workout if it's already ended
     if (sessions[workoutId]?.ended) {
       alert('Workout session already ended.');
       return;
     }
 
+
     // Set the button to be in "stopping" mode to prevent double clicks
     setSessions((prevSessions) => ({
       ...prevSessions,
       [workoutId]: { ...prevSessions[workoutId], isStopping: true },
     }));
+
 
     try {
       // Send a POST request to stop the workout session
@@ -128,7 +133,9 @@ const Workouts = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+
       console.log("End Workout Response:", response.data); // Debugging the response
+
 
       if (response.data.success) {
         // Update the session state to reflect the workout has ended
@@ -142,6 +149,7 @@ const Workouts = () => {
             isStopping: false, // Reset the isStopping state
           },
         }));
+
 
         alert('Workout session ended!'); // Alert when the session ends successfully
       } else {
@@ -157,6 +165,7 @@ const Workouts = () => {
       }));
     }
   };
+
 
   if (loading) {
     return (
@@ -175,12 +184,14 @@ const Workouts = () => {
           zIndex: 2000,  // Ensure this is above the content
         }}
       >
-        <CircularProgress sx={{color: '#e0c2ff'}} />
+        <CircularProgress sx={{ color: '#e0c2ff' }} />
       </Box>
     );
   }
 
+
   if (error) return <Typography color="error">Error: {error}</Typography>;
+
 
   return (
     <div>
@@ -189,10 +200,9 @@ const Workouts = () => {
         {selectedMuscle === null && (
           <Box
             sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              gap: "20px",
-              marginBottom: "30px",
+              display: "flex",
+              gap: "50px",
+              padding: "50px"
             }}
           >
             {muscles.map((muscle, index) => (
@@ -206,30 +216,44 @@ const Workouts = () => {
                   elevation={3}
                   sx={{
                     padding: "20px",
-                    borderRadius: "10px",
+                    borderRadius: "15px",
                     backgroundColor: theme.palette.mode === "dark" ? "#333" : "#e0c2ff",
                     color: theme.palette.text.primary,
                     cursor: "pointer",
                     textAlign: "center",
-                    transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
+                    transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out, transform 0.5s ease-in-out", 
                     border: `1px solid ${theme.palette.mode === "dark" ? "#fff" : "#000"}`,
                     "&:hover": {
                       backgroundColor: theme.palette.mode === "dark" ? "#444" : "#d0b3ff",
+                      transform: "scale(1.1)", // This scales up the card
+
                     },
+                    height: "300px",
+
                   }}
                   onClick={() => handleMuscleSelect(muscle)}
                 >
-                  <Typography variant="h6">{muscle}</Typography>
+                  <img src={muscleImages[muscle.replace(/\s+/g, '').toLowerCase()]} alt={muscle} style={{ width: "180px", borderRadius: "8px", borderRadius: "8px", padding: "10px" }} />
+
+                  <Typography variant="h6"
+                    sx={{
+                      marginTop: "45px",
+                      textTransform: "uppercase"
+
+                    }}>
+                    {muscle}</Typography>
                 </Paper>
               </motion.div>
             ))}
           </Box>
         )}
 
+
         {/* Filtered Workouts List */}
         {selectedMuscle && filteredWorkouts.length === 0 && (
           <Typography variant="h6">No workouts available for this muscle.</Typography>
         )}
+
 
         <Box
           sx={{
@@ -254,6 +278,7 @@ const Workouts = () => {
                   color: theme.palette.text.primary,
                   transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
                   border: `1px solid ${theme.palette.mode === "dark" ? "#fff" : "#000"}`,
+                  
                 }}
               >
                 <Typography variant="h5">{workout.workout_name}</Typography>
@@ -264,6 +289,7 @@ const Workouts = () => {
                 <Typography variant="body1"><strong>Difficulty:</strong> {workout.difficulty}</Typography>
                 <Typography variant="body2"><strong>Tips:</strong> {workout.tips}</Typography>
                 <Typography variant="body2"><strong>Description:</strong> {workout.description}</Typography>
+
 
                 {/* Conditionally render the button based on the session state */}
                 {sessions[workout.workout_id]?.ended ? (
@@ -287,6 +313,7 @@ const Workouts = () => {
                     Start Workout
                   </Button>
                 )}
+
 
                 {/* Stop Workout Button */}
                 {sessions[workout.workout_id]?.started && !sessions[workout.workout_id]?.ended && (
@@ -312,6 +339,7 @@ const Workouts = () => {
           ))}
         </Box>
 
+
         {/* Back to Muscle Selection Button */}
         {selectedMuscle && (
           <Box sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
@@ -336,6 +364,5 @@ const Workouts = () => {
     </div>
   );
 };
- 
+
 export default Workouts;
- 
