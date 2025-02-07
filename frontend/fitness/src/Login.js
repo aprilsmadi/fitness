@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import { CircularProgress } from '@mui/material';  // Import CircularProgress for loading spinner
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {InputAdornment, IconButton}  from "@mui/material";
+import { InputAdornment, IconButton } from "@mui/material";
 
 const theme = createTheme({
     palette: {
@@ -32,12 +32,12 @@ const Login = () => {
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword); // Toggle visibility
-      };
-    
-      const handleChangePassword = (event) => {
+    };
+
+    const handleChangePassword = (event) => {
         setPassword(event.target.value); // Update password value
-      };
-    
+    };
+
 
 
     // Handle form submission (for login or registration)
@@ -96,7 +96,7 @@ const Login = () => {
     };
 
 
-    
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -144,6 +144,19 @@ const Login = () => {
                                                 backgroundColor: 'transparent', // Remove hover background on input
                                             },
                                         },
+
+                                        '& input:-webkit-autofill': {
+                                            WebkitBoxShadow: '0 0 0 30px transparent inset', // Prevent autofill background color
+                                            WebkitTextFillColor: currentTheme.palette.mode === 'dark' ? '#fff' : 'black', // Set autofill text color to match input text
+                                            padding: '8px 10px', // Adjust padding to control the height of the autofill highlight
+                                          },
+                                        '& input:-webkit-autofill::first-line': {
+                                            padding: '8px 10px', // Adjust the padding to match the textfield border
+                                        },
+                                        '& input:-webkit-autofill::after': {
+                                            borderRadius: '15px', // Ensure the highlight has the same radius as the text field
+                                            border: '1px solid lightgray', // Prevent the autofill highlight from expanding beyond the border
+                                        },
                                     }}
                                 />
                             </div>
@@ -157,13 +170,13 @@ const Login = () => {
                                     variant="outlined"
                                     InputProps={{
                                         endAdornment: (
-                                          <InputAdornment position="end">
-                                            <IconButton onClick={handleClickShowPassword} edge="end">
-                                              {showPassword ? <VisibilityOff /> : <Visibility />} {/* Toggle icons */}
-                                            </IconButton>
-                                          </InputAdornment>
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={handleClickShowPassword} edge="end">
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />} {/* Toggle icons */}
+                                                </IconButton>
+                                            </InputAdornment>
                                         ),
-                                      }}
+                                    }}
                                     sx={{
                                         width: '250px',
                                         '& .MuiOutlinedInput-root': {
@@ -177,6 +190,18 @@ const Login = () => {
                                             '&:hover': {
                                                 backgroundColor: 'transparent', // Remove hover background on input
                                             },
+                                        },
+                                        '& input:-webkit-autofill': {
+                                            WebkitBoxShadow: '0 0 0 30px transparent inset', // Prevent autofill background color
+                                            WebkitTextFillColor: currentTheme.palette.mode === 'dark' ? '#fff' : 'black', // Set autofill text color to match input text
+                                            padding: '8px 10px', // Adjust padding to control the height of the autofill highlight
+                                          },
+                                        '& input:-webkit-autofill::first-line': {
+                                            padding: '8px 10px', // Adjust the padding to match the textfield border
+                                        },
+                                        '& input:-webkit-autofill::after': {
+                                            borderRadius: '15px', // Ensure the highlight has the same radius as the text field
+                                            border: '1px solid lightgray', // Prevent the autofill highlight from expanding beyond the border
                                         },
                                     }}
                                 />

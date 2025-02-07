@@ -6,15 +6,13 @@ import Workouts from './components/Workouts';
 import Stats from './components/Stats';
 import Login from './Login';
 import NavBar from './NavBar.jsx';
-
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider, createTheme, CssBaseline, IconButton } from '@mui/material';
-import { WbSunny, Nightlight } from '@mui/icons-material';  // Import icons
+
 
 
 const AppWithTheme = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Get theme from localStorage or default to light mode
     const savedTheme = localStorage.getItem('isDarkMode');
     return savedTheme ? JSON.parse(savedTheme) : false; // false means light mode
   });
