@@ -41,3 +41,64 @@ code {
   background-image: url('https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853965/gbivfllw01exsnoixe1b.jpg');
 }
 
+.custom-confirm {
+  font-family: "MuseoModerno", serif;
+  background-color: rgb(226, 92, 92);
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px;
+  color: black;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 16px;
+  justify-content: center;
+}
+
+.custom-cancel {
+  font-family: "MuseoModerno", serif;
+  background-color: rgb(90, 189, 90);
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px;
+  color: black;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 16px;
+  justify-content: center;
+}
+
+.custom-confirm:hover {
+
+  background-color: rgb(190, 54, 54);
+
+}
+
+.custom-cancel:hover {
+
+  background-color: rgb(57, 128, 57);
+
+}
+
+.swal2-popup {
+  border: 3px solid black;
+  border-radius: 20px;
+  color: black;
+  
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInAnimation 0.5s ease-out forwards;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

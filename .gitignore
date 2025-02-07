@@ -4,3 +4,4 @@ package.json
 /backend/node_modules
 *.db
 
+backend/workouts.db

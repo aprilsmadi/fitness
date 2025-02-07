@@ -13,7 +13,11 @@ import { WbSunny, Nightlight } from '@mui/icons-material';  // Import icons
 
 
 const AppWithTheme = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Get theme from localStorage or default to light mode
+    const savedTheme = localStorage.getItem('isDarkMode');
+    return savedTheme ? JSON.parse(savedTheme) : false; // false means light mode
+  });
   const [isFading, setIsFading] = useState(false);
 
 
@@ -162,8 +166,13 @@ const AppWithTheme = () => {
 
 
   // Toggle theme on Switch change
-  const toggleTheme = () => setIsDarkMode((prev) => !prev);
-
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => {
+      const newTheme = !prev;
+      localStorage.setItem('isDarkMode', JSON.stringify(newTheme)); // Save the new theme preference
+      return newTheme;
+    });
+  };
 
   useEffect(() => {
     setIsFading(true);
@@ -180,13 +189,14 @@ const AppWithTheme = () => {
 
 
       <div className={`background-container ${isDarkMode ? 'dark' : 'light'}`}> 
-
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw', position: 'relative' }}className="fade-in">
         
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="Workouts" element={<Workouts />} />
           <Route path="Stats" element={<Stats />} />
         </Routes>
+        </div>
       </div>
     </ThemeProvider >
   );
