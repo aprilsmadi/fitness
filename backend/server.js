@@ -161,10 +161,32 @@ app.get('/most-frequent-workouts', authenticateToken, (req, res) => {
     }
     res.json(rows);
   });
-  
+
 });
 
+app.get('/user-progress', authenticateToken, (req, res) => {
+  const userId = req.user.id;
 
+  const query = `
+    SELECT 
+      w.workout_name, 
+      COUNT(ws.session_id) AS total_sessions,  -- Total sessions for each workout
+      AVG(STRFTIME('%s', ws.end_time) - STRFTIME('%s', ws.start_time)) / 60 AS avg_duration,  -- Average session duration in minutes
+      SUM(w.calories * (STRFTIME('%s', ws.end_time) - STRFTIME('%s', ws.start_time)) / w.duration) AS total_calories  -- Total calories burned based on workout duration
+    FROM workout_sessions ws
+    JOIN workouts w ON ws.workout_id = w.workout_id
+    WHERE ws.user_id = ?
+    GROUP BY ws.workout_id
+  `;
+
+  // Execute the query
+  db.all(query, [userId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error retrieving progress: ' + err.message });
+    }
+    res.json({ progress: rows });
+  });
+});
 
 // // User Progress (GET)
 // app.get('/user-progress', authenticateToken, (req, res) => {

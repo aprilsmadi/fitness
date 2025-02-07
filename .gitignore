@@ -5,4 +5,15 @@ package.json
 *.db
 
 backend/workouts.db
+<<<<<<< Updated upstream
 backend/workouts.db
+=======
+/backend/node_modules
+backend/package.json
+backend/package-lock.json
+/frontend/fitness/node_modules
+backend/package.json
+backend/workouts.db
+package-lock.json
+package.json
+>>>>>>> Stashed changes
