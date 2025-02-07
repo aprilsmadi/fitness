@@ -1,5 +1,3 @@
-node_modules
+
 package-lock.json
-backend/workouts.db
-backend/package.json
-*.json
+package.json

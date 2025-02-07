@@ -181,11 +181,9 @@ const AppWithTheme = () => {
 
 
 
-      <div className={`background-container ${isDarkMode ? 'dark' : 'light'} ${isFading ? 'fade' : ''}`}>
+      <div className={`background-container ${isDarkMode ? 'dark' : 'light'}`}> 
 
-
-
-        {/* Routes */}
+        
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="Workouts" element={<Workouts />} />
@@ -204,4 +202,4 @@ root.render(
   </Router>
 );
 
-reportWebVitals();
+reportWebVitals(); 
