@@ -230,10 +230,11 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
           {isLoggedIn && (
             <List id="nav">
               <ListItem button sx={{
-                '&:hover': { border: `2px solid ${theme.palette.mode === 'dark' ? 'white' : 'black'}`, borderRadius: '20px' },
+                '&:hover': { border: `2px solid ${theme.palette.mode === 'dark' ? 'white' : 'black'}`,
+                 borderRadius: '20px' },
                 border: `2px solid transparent`, // Initially set to transparent
               }}>
-                <Link to="/Workouts" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+                <Link to="/Workouts" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none',width: '100%' }}>
                   <ListItemIcon>
                     <FitnessCenterTwoToneIcon />
                   </ListItemIcon>
@@ -247,7 +248,7 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
                 '&:hover': { border: `2px solid ${theme.palette.mode === 'dark' ? 'white' : 'black'}`, borderRadius: '20px' },
                 border: `2px solid transparent`, // Initially set to transparent
               }}>
-                <Link to="/Stats" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+                <Link to="/Stats" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none',width: '100%' }}>
                   <ListItemIcon>
                     <SignalCellularAltTwoToneIcon />
                   </ListItemIcon>
@@ -270,7 +271,8 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
                   '&:hover': {
                     border: `2px solid ${theme.palette.mode === 'dark' ? 'white' : 'black'}`,
                     borderRadius: '20px',
-                    backgroundColor: 'rgb(190, 54, 54)'
+                    backgroundColor: 'rgb(190, 54, 54)',
+                    
                   },
 
                   border: `2px solid transparent`,
@@ -280,7 +282,7 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
                     <LogoutTwoToneIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={<Typography sx={{ fontFamily: 'MuseoModerno, serif', textDecoration: 'none' }}>Logout</Typography>}
+                    primary={<Typography sx={{ fontFamily: 'MuseoModerno, serif', textDecoration: 'none',width: '100%' }}>Logout</Typography>}
                   />
                 </ListItem>
               </List>

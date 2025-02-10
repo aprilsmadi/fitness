@@ -102,3 +102,32 @@ code {
     transform: translateY(0);
   }
 }
+
+
+@keyframes subtleMoveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);  /* Move up slightly */
+  }
+  50% {
+    transform: translateY(5px);   /* Move down slightly */
+  }
+  75% {
+    transform: translateY(-3px);  /* Move up slightly */
+  }
+  100% {
+    transform: translateY(0);     /* Return to original position */
+  }
+}
+
+.login-form {
+  position: relative; /* Prevent disappearing */
+  animation: subtleMoveUpDown 5s ease-in-out infinite;
+  display: flex; /* Ensure it's visible */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}

@@ -19,6 +19,30 @@ const Workouts = () => {
   const [error, setError] = useState(null);
   const [selectedMuscle, setSelectedMuscle] = useState(null);
   const [sessions, setSessions] = useState({}); // Track session IDs for each workout
+  const [welcomeText, setWelcomeText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+  const welcomeMessage = "Welcome Back! :D";
+
+
+  useEffect(() => {
+    if (isTyping) {
+      let index = 0;
+      setWelcomeText(welcomeMessage[0]); // Start with the first character immediately
+
+      const interval = setInterval(() => {
+        index += 1;
+        setWelcomeText((prev) => prev + welcomeMessage[index]);
+
+        if (index === welcomeMessage.length - 1) {
+          clearInterval(interval); // Stop once the full message is typed
+          setIsTyping(false);
+        }
+      }, 150); // Adjust typing speed
+
+      return () => clearInterval(interval);
+    }
+  }, [isTyping]);
+
 
   // Fetch workouts from the backend
   useEffect(() => {
@@ -195,6 +219,37 @@ const Workouts = () => {
 
   return (
     <div>
+<Box
+  sx={{
+    display: "flex",
+    justifyContent: "center", // Horizontally center
+    alignItems: "center",     // Vertically center
+  }}
+>
+  <Typography
+    variant="h3"
+    sx={{
+      display: "inline-block",
+      textAlign: "center",
+      fontWeight: "bold",
+      marginBottom: "20px",
+      overflow: "hidden",
+      color: theme.palette.mode === "dark" ? "#fff" : "#000",
+      backgroundColor: theme.palette.mode === "dark" ? "#333" : "#e0c2ff",
+      width: `${(welcomeText.length / welcomeMessage.length) * 100}%`,
+      border: `1px solid ${theme.palette.mode === "dark" ? "#fff" : "#000"}`,
+      minWidth: "20px",
+      maxWidth: "fit-content",
+      transition: "width 0.1s ease-in-out",
+      margin: "0 auto",
+      borderRadius: "15px",
+      whiteSpace: "nowrap",
+      padding: "10px 20px",
+    }}
+  >
+    {welcomeText}
+  </Typography>
+</Box>
       <Box sx={{ marginTop: "100px", transition: "background-color 0.8s ease-in-out" }}>
         {/* Muscle Selection Cards */}
         {selectedMuscle === null && (
@@ -206,11 +261,14 @@ const Workouts = () => {
             }}
           >
             {muscles.map((muscle, index) => (
+
               <motion.div
                 key={muscle}
                 initial={{ opacity: 0, y: 20 }} // Start faded out and slightly below
                 animate={{ opacity: 1, y: 0 }} // Fade in and move up
                 transition={{ duration: 0.5, delay: index * 0.2 }} // Stagger effect
+                style={{ animation: "subtleMove 5s ease-in-out infinite" }} // Apply CSS animation for smooth movement
+
               >
                 <Paper
                   elevation={3}
@@ -221,7 +279,7 @@ const Workouts = () => {
                     color: theme.palette.text.primary,
                     cursor: "pointer",
                     textAlign: "center",
-                    transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out, transform 0.5s ease-in-out", 
+                    transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out, transform 0.5s ease-in-out",
                     border: `1px solid ${theme.palette.mode === "dark" ? "#fff" : "#000"}`,
                     "&:hover": {
                       backgroundColor: theme.palette.mode === "dark" ? "#444" : "#d0b3ff",
@@ -278,7 +336,7 @@ const Workouts = () => {
                   color: theme.palette.text.primary,
                   transition: "background-color 0.8s ease-in-out, color 0.8s ease-in-out",
                   border: `1px solid ${theme.palette.mode === "dark" ? "#fff" : "#000"}`,
-                  
+
                 }}
               >
                 <Typography variant="h5">{workout.workout_name}</Typography>

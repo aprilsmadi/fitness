@@ -119,7 +119,7 @@ const Login = () => {
                     </div>
                 )}
                 <FormControl variant="standard" style={{ zIndex: 1 }}>
-                    <div className={`fade-in ${isMounted ? '' : 'hidden'}`} style={loginStyle}>
+                    <div className={`fade-in ${isMounted ? '' : 'hidden'} `} style={loginStyle}>
                         <h2 style={{ alignItems: 'center' }}>{isLogin ? 'Login' : 'Register'}</h2>
                         {error && <p style={{ color: 'green' }}>{error}</p>}
                         <form onSubmit={handleSubmit}>

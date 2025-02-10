@@ -90,4 +90,25 @@
   cursor: not-allowed; 
 }
 
-  
+
+@keyframes subtleMove {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);  /* Move up slightly */
+  }
+  50% {
+    transform: translateY(5px);   /* Move down slightly */
+  }
+  75% {
+    transform: translateY(-3px);  /* Move up slightly */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: subtleMove 5s ease-in-out infinite;
+}
