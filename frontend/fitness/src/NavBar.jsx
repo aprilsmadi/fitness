@@ -170,7 +170,7 @@ const NavBar = ({ isDarkMode, toggleTheme }) => {
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
             <MenuIcon />
           </IconButton>
-          <Link to="/Workouts">
+          <Link to={isLoggedIn ? "/Workouts" : "/"}>
             <MyLogo
               src={theme.palette.mode === 'dark'
                 ? "https://res.cloudinary.com/dnxyeqknh/image/upload/v1738853336/fered16qk2accskhgn43.png"
